@@ -1,39 +1,3 @@
-# name: CICD
-
-# on:
-#   push:
-#     branches:
-#       - main
-
-# jobs:
-#   build:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Checkout Source
-#         uses: actions/checkout@v3
-
-#       - name: Login to Docker Hub
-#         run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-
-#       - name: Build Docker Image
-#         run: docker build -t saurabhkharate/reactjs-app-test:latest .
-
-#       - name: Publish image to Docker Hub
-#         run: docker push saurabhkharate/reactjs-app-test:latest
-
-#   deploy:
-#     needs: build
-#     runs-on: ubuntu-latest # or self-hosted runner
-#     steps:
-#       - name: Pull image from Docker Hub
-#         run: docker pull saurabhkharate/reactjs-app-test:latest
-
-#       - name: Delete Old Container
-#         run: docker rm -f reactContainer || true
-
-#       - name: Run Docker Container
-#         run: docker run -d -p 3000:80 --name reactContainer saurabhkharate/reactjs-app-test:latest
-
 name: CICD
 
 on:
@@ -47,20 +11,25 @@ jobs:
     steps:
       - name: Checkout Source
         uses: actions/checkout@v3
+
       - name: Login to Docker Hub
         run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-      - name: Build Docker Image
-        run: docker build -t reactContainer saurabhkharate/reactjs-app-test .
-      - name: Publish image to docker hub
-        run: docker push reactContainer saurabhkharate/reactjs-app-test:latest   
 
-  deploy: 
+      - name: Build Docker Image
+        run: docker build -t saurabhkharate/reactjs-app-test .
+
+      - name: Publish image to Docker Hub
+        run: docker push saurabhkharate/reactjs-app-test:latest
+
+  deploy:
     needs: build
-    runs-on: aws-ec2    
+    runs-on: ubuntu-latest # or self-hosted runner
     steps:
-      - name: Pull image from docker hub
-        run: docker pull reactContainer saurabhkharate/reactjs-app-test:latest 
+      - name: Pull image from Docker Hub
+        run: docker pull saurabhkharate/reactjs-app-test:latest
+
       - name: Delete Old Container
         run: docker rm -f reactContainer
-      - name: Run docker container
-        run: docker run -d -p 3000:80 --name reactContainer reactContainer saurabhkharate/reactjs-app-test   
+
+      - name: Run Docker Container
+        run: docker run -d -p 3000:80 --name reactContainer saurabhkharate/reactjs-app-test
