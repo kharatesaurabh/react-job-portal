@@ -8,6 +8,7 @@ const Home = () => {
     <div className={styles.mainConatiner}>
         <DrawerAppBar/>
         <div className={styles.buttonContainer}>
+          
         <Button variant="contained">View All Jobs</Button>
         <Button variant="contained">Add Jobs</Button>
         </div>
