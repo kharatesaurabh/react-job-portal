@@ -23,7 +23,7 @@ jobs:
 
   deploy:
     needs: build
-    runs-on: ubuntu-latest # or self-hosted runner
+    runs-on: aws-ec2 
     steps:
       - name: Pull image from Docker Hub
         run: docker pull saurabhkharate/reactjs-app-test:latest
