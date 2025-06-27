@@ -7,7 +7,7 @@ const dashboardItems = [
   { title: 'My Notes', color: '#F9F871' },
   { title: 'Daily Goals', color: '#A0E7E5' },
   { title: 'Pomodoro Timer', color: '#B4F8C8' },
-  // { title: 'Inspiration Board', color: '#FFAEBC' },
+  { title: 'Inspiration Board', color: '#FFAEBC' },
 ];
 
 const Home = () => {
